@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %} Administrator | {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<section id="contact" class="contact">
+    <div class="container">
+
+        <div class="section-title">
+            <span>Twoje produkty</span>
+        </div>
+        <br>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Produkt</th>
+                        <th scope="col">Cena</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Treść</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prod in obiekt %}
+                    <tr>
+                        <th scope="row"><br>{{ prod.id }}</th>
+                        <td><br>{{ prod.product_id.title }}</td>
+                        <td><br>{{ prod.product_id.price }}</td>
+                        <td><img src=" {{ prod.product_id.image.url }} "
+                                style="width: 75px; height: 75px; object-fit:fill;" class="img-fluid" alt=""></td>
+                        <td><button class="btn btn-dark"><a
+                                    href="{% url 'delete_fromcart' id=prod.id%}">Usuń</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+        <button class="btn btn-secondary"><a href="{% url 'order' %}">Dalej</a></button>
+
+    </div>
+</section>
+
+{% else %}
+<div class="container" style="height: 550px;">
+    <br><br><br><br>
+    <p>Przykro nam... ale niestety nie masz uprawnień administratora. Tylko administrator ma dostęp do tej strony.</p>
+</div>
+
+
+{% endif %}
+{% endblock %}

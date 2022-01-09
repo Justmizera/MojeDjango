@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %} Administrator | {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+
+<br>
+<br>
+<br>
+<br>
+
+<section id="contact" class="contact">
+    <div class="container">
+
+        <div class="section-title">
+            <span>Twoje produkty</span>
+        </div>
+        <br>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tytuł</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Treść</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prod in obiekt %}
+                    <tr>
+                        <th scope="row">{{ prod.id }}</th>
+                        <td>{{ prod.title }}</td>
+                        <td>{{ prod.price }}</td>
+                        <td>{{ prod.category }}</td>
+                        <td>{{ prod.description }}</td>
+                        <td><button class="btn btn-secondary"> <a
+                                    href="{% url 'edit_site' id=prod.id%}">Edytuj</a></button>
+                        </td>
+                        <td><button class="btn btn-dark"><a href="{% url 'delete_site' id=prod.id%}">Usuń</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button class="btn btn-secondary"><a href="{% url 'add_site' %}">Dodaj</a></button>
+        <br><br><br><br>
+
+
+
+
+    </div>
+
+    <div class="container">
+
+        <div class="section-title">
+            <span>Dokonane zamówienia</span>
+        </div>
+        <br>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Numer zamówienia</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Adres</th>
+                        <th scope="col">Kod pocztowy</th>
+                        <th scope="col">Miasto</th>
+                        <th scope="col">Telefon</th>
+                        <th scope="col">Kwota zamówienia</th>
+                        <th scope="col">Produkty</th>
+                        <th scope="col">Status płatności</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prod in order %}
+                    <tr>
+                        <th scope="row">{{ prod.id }}</th>
+                        <td>{{ prod.first_name }}</td>
+                        <td>{{ prod.last_name }}</td>
+                        <td>{{ prod.email }}</td>
+                        <td>{{ prod.address }}</td>
+                        <td>{{ prod.zipcode }}</td>
+                        <td>{{ prod.place }}</td>
+                        <td>{{ prod.phone }}</td>
+                        <td>{{ prod.paid_amount }}</td>
+                        <td>{% for item in orderitem %}
+                            {% if prod.id == item.order.id %}
+                            {{item.product_id}}
+                            <br>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        {% if prod.paid == False %}
+                        <td><button class="btn btn-dark"><a href="{% url 'edit_order' id=prod.id%}">Oznacz jako
+                                    opłacone</a></button>
+                        </td>
+                        {% else %}
+                        <td>Opłacono</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br><br><br><br>
+
+
+
+
+    </div>
+
+
+
+    </div>
+</section>
+{% endif %}
+{% else %}
+
+<div class="container" style="height: 550px;">
+    <br><br><br><br>
+    <p>Przykro nam... ale niestety nie masz uprawnień administratora. Tylko administrator ma dostęp do tej strony.</p>
+</div>
+
+
+{% endif %}
+
+
+
+{% endblock %}

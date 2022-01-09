@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %} product.title | {% endblock %}
+
+{% block content %}
+
+
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+
+        <div class="row gy-4">
+
+
+            <div class="col-lg-8">
+                <div class="portfolio-img"><img src=" {{obiekt.image.url}} "
+                        style="width: 100%; height:750px; object-fit:fill;" class="img-fluid" alt=""></div>
+            </div>
+
+
+            <div class="col-lg-4">
+
+
+
+                <div class="portfolio-info">
+                    <h3>Szczegóły produktu</h3>
+                    <ul>
+
+                        <li><strong>Kategoria</strong>: {{obiekt.category}}</li>
+                        <li><strong>Nazwa</strong>: {{obiekt.title}}</li>
+                        <li><strong>Cena</strong>: {{obiekt.price}} zł</li>
+                        <br>
+
+                        {% if user.is_authenticated %}
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input class="btn btn-dark" type="submit" value="Dodaj" />
+                        </form>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="portfolio-description">
+                    <h2>Opis produktu</h2>
+                    <p>{{obiekt.description}} </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Portfolio Details Section -->
+
+
+{% endblock %}

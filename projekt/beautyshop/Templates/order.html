@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Zamówienie | {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<br><br>
+<div class="row justify-content-center">
+
+    <div class="col-lg-5 col-md-8">
+
+
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.as_p}}
+
+            <p>Suma Twojego zamówienia wynosi: {{ suma }} zł</p>
+            <input class="btn btn-dark" type="submit" value="Zamów" />
+
+        </form>
+    </div>
+
+</div>
+<br><br>
+
+{% else %}
+
+<div class="container" style="height: 550px;">
+    <br><br><br><br>
+    <p>Przykro nam... ale musisz być zalogowany.</p>
+</div>
+
+
+{% endif %}
+{% endblock %}
